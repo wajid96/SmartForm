@@ -1,24 +1,41 @@
 // Your jQuery goes here
 
-var userData = {
-  name:"",
-  email:"",
-  html: {likes: [], dislikes: []},
-  css: {likes: [], dislikes: []},
-  js: {likes: [], dislikes: []},
-  strengths: {html:"", css:"", js:""},
-  currentQuestion: "welcome"
-};
+//local storage access
+var userData = {};
+if(localStorage.getItem('userData')){
+  userData = JSON.parse(localStorage.getItem('userData'));
+  //to keep the same page on refresh
+  $(".question").hide();
+  $("#"+userData.currentQuestion).show();
+  //with the last data
+  $("#name").val(userData.name);
+  $("#email").val(userData.email);
+}else{
+  userData = {
+    name:"",
+    email:"",
+    html: {likes: [], dislikes: []},
+    css: {likes: [], dislikes: []},
+    js: {likes: [], dislikes: []},
+    strengths: {html:"", css:"", js:""},
+    currentQuestion: "welcome"
+  };
+  localStorage.setItem('userData', JSON.stringify(userData));
+}
+
+
 
 var position = [false, false, false];
 
 $("#startbtn").click(function(event){
   $("#welcome").hide();
   $("#q1").show();
+
   /*if(userData.name)
     $("#name").val(userData.name);
   */
 });
+
 
 function validateName(name){
 	var re = /^[A-Za-z ]+$/;
@@ -49,6 +66,8 @@ $("#email").change(function(event){
 $("#q1nxt").click(function(event){
   userData.name = $("#name").val();
   userData.email = $("#email").val();
+  userData.currentQuestion = "q1";
+  localStorage.setItem('userData', JSON.stringify(userData));
   //console.log(JSON.stringify(userData));
   $("#q1").hide();
   $("#q2").show();
