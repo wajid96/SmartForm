@@ -10,29 +10,46 @@ var userData = {
   currentQuestion: "welcome"
 };
 
+var position = [false, false, false];
+
 $("#startbtn").click(function(event){
   $("#welcome").hide();
   $("#q1").show();
-  if(userData.name){
+  /*if(userData.name)
     $("#name").val(userData.name);
-  }
+  */
 });
+
+function validateName(name){
+	var re = /^[A-Za-z ]+$/;
+	return re.test(name);
+}
+
+function validateEmail(email){
+	var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	return re.test(email);
+}
 
 $("#name").change(function(event){
   console.log($("#name").val());
+  if(!validateName($("#name").val()))
+    alert("Please enter a valid name");
 });
 
 $("#email").change(function(event){
   console.log($("#email").val());
-    //to-do: validate email value
-    if($("#name").val() && $("#email").val())
-      $("#q1nxt").prop("disabled",false);
+  //to-do: validate email value
+  if(!validateEmail($("#email").val()))
+    alert("Please enter a valid email address");
+  if(validateName($("#name").val()) && validateEmail($("#email").val()))
+    $("#q1nxt").prop("disabled",false);
 
 });
 
 $("#q1nxt").click(function(event){
   userData.name = $("#name").val();
   userData.email = $("#email").val();
+  //console.log(JSON.stringify(userData));
   $("#q1").hide();
   $("#q2").show();
 });
@@ -55,4 +72,28 @@ $("#jsQ").click(function(event){
 $(".prevQ2").click(function(event){
   $(this).parent().parent().parent().hide();
   $("#q2").show();
+});
+/*
+$("#q2a").click(function(event){
+		$("input[name='likesHTML']").click(function() {
+			if (this.checked) {
+        position[0] = true;
+				userData.html.likes.push(this.value);
+				userData.currentQuestion = "html";
+				console.log(JSON.stringify(userData));
+			}
+});
+*/
+$("#htmlnxt").click(function(event){
+		if (position[0] == true && position[1] == true && position[2] == true)
+		{
+			$("#q2").hide();
+			$("#q2a").hide();
+			$("#q3").show();
+		}
+    else{
+      $("#q2a").hide();
+  		$("#q2").show();
+      $("#htmlQ").prop("disabled", true);
+    }
 });
