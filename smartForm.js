@@ -172,12 +172,6 @@ $("#q2a input[name='likesHTML']").click(function(event){
         localStorage.setItem('userData', JSON.stringify(userData));
 				console.log(JSON.stringify(userData));
 			}
-      if (this.checked == false) {
-        for(var i=0; i<userData.html.likes.length; i++){
-          if($("input[name='likesHTML']").index(this) == userData.html.likes[i]);
-            userData.html.likes.pop[i];
-        }
-      }
 });
 
 $("#q2a input[name='dlikesHTML']").click(function(event){
