@@ -172,6 +172,12 @@ $("#q2a input[name='likesHTML']").click(function(event){
         localStorage.setItem('userData', JSON.stringify(userData));
 				console.log(JSON.stringify(userData));
 			}
+      if (this.checked == false) {
+        for(var i=0; i<userData.html.likes.length; i++){
+          if($("input[name='likesHTML']").index(this) == userData.html.likes[i]);
+            userData.html.likes.pop[i];
+        }
+      }
 });
 
 $("#q2a input[name='dlikesHTML']").click(function(event){
@@ -404,6 +410,7 @@ $("#thanksnxt").click(function(event){
 $("#delanswers").click(function(event){
   $("#answers").hide('blind');
   $("#welcome").show('blind');
+  delete userData;
   userData = {
     name:"",
     email:"",
@@ -415,5 +422,6 @@ $("#delanswers").click(function(event){
     currentQuestion: "welcome"
   };
   localStorage.setItem('userData', JSON.stringify(userData));
+  location.reload();
 
 });
